@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GeoPin — India's Village-Level API Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  </style>
+</head>
+<body>
+  <div class="stars-container" id="stars"></div>
+  <div class="glow-orb glow-orb-1"></div>
+  <div class="glow-orb glow-orb-2"></div>
+  <div class="grid-bg"></div>
+
+  <div class="app-container">
+    <nav>
+      <div class="nav-logo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L4 7V17L12 22L20 17V7L12 2Z" stroke="#5B8DEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M12 22V12" stroke="#5B8DEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M20 7L12 12L4 7" stroke="#5B8DEF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        GeoPin <span style="color:var(--text-muted); font-weight:400; font-size:14px; margin-left:4px;">v1.0</span>
+      </div>
+      <div class="nav-links">
+        <button class="nav-link active" onclick="showSection('home')">Home</button>
+        <button class="nav-link" onclick="showSection('search')">Search</button>
+        <button class="nav-link" onclick="showSection('pricing')">Pricing</button>
+        <button class="nav-link" onclick="showSection('docs')">Docs</button>
+        <button class="nav-link" onclick="showSection('dashboard')">Dashboard</button>
+      </div>
+      <div class="nav-links" id="authNavSection">
+        <!-- Auth state will be injected here -->
+      </div>
+    </nav>
+
+    <!-- Home Section -->
+    <main id="section-home" class="section active">
+      <div class="hero">
+        <div class="hero-badge">
+          <span style="display:inline-block; width:6px; height:6px; background:var(--success); border-radius:50%; margin-right:8px;"></span>
+          Developer API Now Live
+        </div>
+        <h1 class="hero-title">The Complete API for <span>India's Village Data.</span></h1>
+        <p class="hero-sub">Access precise geographical data for over 600,000 villages with high-performance, developer-friendly endpoints. Built for India's digital future.</p>
+        <div class="hero-actions">
+          <button class="btn-primary" onclick="showSection('search')">Try Search Explorer</button>
+          <button class="btn-ghost" onclick="showSection('pricing')">View Pricing</button>
+        </div>
+
+        <div class="hero-cards">
+          <div class="floating-card card-left">
+            <div class="card-logo">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+            </div>
+            <div class="card-heading">Developer API</div>
+            <div class="card-subtext">Seamless JSON integration</div>
+            <div class="card-input-group">
+              <div class="card-label">YOUR API KEY</div>
+              <div class="card-input">geo_pk_live_••••••••••••</div>
+            </div>
+            <div class="card-btn">Generate Key</div>
+          </div>
+
+          <div class="floating-card card-center">
+            <div class="card-logo">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div class="card-heading">Sign In to Dashboard</div>
+            <div class="card-subtext">Manage your API usage and plans</div>
+            <div class="card-input-group">
+                <div class="card-label">EMAIL ADDRESS</div>
+                <div class="card-input">email@company.com</div>
+            </div>
+            <div class="card-input-group">
+                <div class="card-label">PASSWORD</div>
+                <div class="card-input">••••••••</div>
+            </div>
+            <div class="card-btn" style="background:var(--accent)">Login</div>
+            <div class="card-divider">OR</div>
+            <div class="card-social">
+                <div class="card-social-btn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.283 10.356h-8.327v3.451h4.792c-.446 2.193-2.313 3.453-4.792 3.453a5.27 5.27 0 0 1-5.279-5.28 5.27 5.27 0 0 1 5.279-5.279c1.259 0 2.397.447 3.29 1.178l2.6-2.599c-1.584-1.381-3.615-2.233-5.89-2.233a8.908 8.908 0 0 0-8.934 8.934 8.907 8.907 0 0 0 8.934 8.934c4.467 0 8.529-3.249 8.529-8.934 0-.528-.081-1.097-.202-1.625z"/></svg>
+                    Google
+                </div>
+            </div>
+          </div>
+
+          <div class="floating-card card-right">
+            <div class="card-logo">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <div class="card-heading">Analytics</div>
+            <div class="card-subtext">Real-time usage tracking</div>
+            <div style="height: 120px; display: flex; align-items: flex-end; gap: 8px; margin-top: 20px;">
+                <div style="flex: 1; height: 40%; background: var(--accent); opacity: 0.3; border-radius: 4px;"></div>
+                <div style="flex: 1; height: 60%; background: var(--accent); opacity: 0.5; border-radius: 4px;"></div>
+                <div style="flex: 1; height: 90%; background: var(--accent); border-radius: 4px;"></div>
+                <div style="flex: 1; height: 75%; background: var(--accent); opacity: 0.8; border-radius: 4px;"></div>
+                <div style="flex: 1; height: 50%; background: var(--accent); opacity: 0.4; border-radius: 4px;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-line"></div>
+      </div>
+
+      <div class="stats-strip">
+        <div class="stat-item">
+          <div class="stat-num blue" id="stat-villages">3.7M+</div>
+          <div class="stat-label">Villages Covered</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num purple" id="stat-states">36</div>
+          <div class="stat-label">States & UTs</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num green" id="stat-districts">700+</div>
+          <div class="stat-label">Districts</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" id="stat-subdistricts">6,000+</div>
+          <div class="stat-label">Sub-Districts</div>
+        </div>
+      </div>
+
+      <section class="endpoints-section">
+        <div class="section-tag">Endpoints</div>
+        <h2 class="section-title">Clean,RESTful Routes</h2>
+        <p class="section-desc">Straightforward endpoints with consistent JSON structures for easy parsing.</p>
+        
+        <div class="endpoints-grid">
+          <div class="endpoint-card">
+            <span class="endpoint-method method-get">GET</span>
+            <div class="endpoint-path">/api/villages</div>
+            <div class="endpoint-desc">List all villages with pagination and basic filtering options.</div>
+          </div>
+          <div class="endpoint-card">
+            <span class="endpoint-method method-get">GET</span>
+            <div class="endpoint-path">/api/search</div>
+            <div class="endpoint-desc">High-performance search by village name, district, or pin code.</div>
+          </div>
+          <div class="endpoint-card">
+            <span class="endpoint-method method-get">GET</span>
+            <div class="endpoint-path">/api/states</div>
+            <div class="endpoint-desc">Get hierarchical data starting from state level down to villages.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="code-showcase">
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dot r"></div>
+            <div class="code-dot y"></div>
+            <div class="code-dot g"></div>
+            <span style="font-size:11px; color:var(--text-muted); margin-left:12px; font-family:monospace;">example-request.js</span>
+          </div>
+          <div class="code-body">
+            <div><span class="kw">const</span> <span class="fn">res</span> <span class="op">=</span> <span class="kw">await</span> <span class="fn">fetch</span>(<span class="str">'https://api.geopin.in/search?q=Amod'</span>, {</div>
+            <div style="padding-left: 20px;">headers: { <span class="str">'x-api-key'</span>: <span class="str">'your_pk_key'</span> }</div>
+            <div>});</div>
+            <div style="margin-top:10px;"><span class="kw">const</span> <span class="fn">data</span> <span class="op">=</span> <span class="kw">await</span> <span class="fn">res.json</span>();</div>
+            <div><span class="fn">console.log</span>(data.villages[<span class="num">0</span>]);</div>
+            <div style="margin-top:20px; color:rgba(255,255,255,0.3)">// Output:</div>
+            <div style="color:var(--text-secondary)">{ <span class="str">"name"</span>: <span class="str">"Amod"</span>, <span class="str">"district"</span>: <span class="str">"Bharuch"</span>, <span class="str">"state"</span>: <span class="str">"Gujarat"</span> }</div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Search Section -->
+    <main id="section-search" class="section">
+      <div class="search-page">
+        <div class="search-hero">
+            <div class="section-tag">Explorer</div>
+            <h1>Global Search</h1>
+            <p>Test our real-time village database integration.</p>
+        </div>
+        <div class="search-box">
+            <div class="search-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M16 16l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+            <input type="text" class="search-input" id="villageSearch" placeholder="Search by Village Name (try 'Amod', 'Dharavi', 'Village')...">
+        </div>
+        <div class="search-results" id="searchResults">
+            <div class="search-hint">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M16 16l4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                Start typing to search villages
+            </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Pricing Section -->
+    <main id="section-pricing" class="section">
+        <div class="pricing-section">
+          <div class="section-tag">Pricing</div>
+          <h2 class="section-title">Scalable Plans</h2>
+          <p class="section-desc">From side projects to enterprise clusters, we have a plan that fits.</p>
+  
+          <div class="pricing-grid">
+            <div class="pricing-card">
+              <div class="pricing-tier">Free</div>
+              <div class="pricing-price">₹0<span>/mo</span></div>
+              <p class="pricing-desc">Perfect for testing and small personal projects.</p>
+              <ul class="pricing-features">
+                <li>1,000 requests / day</li>
+                <li>Standard Support</li>
+                <li>Public API Access</li>
+              </ul>
+              <button class="pricing-btn pricing-btn-ghost" onclick="openAuthModal('register')">Get Started</button>
+            </div>
+  
+            <div class="pricing-card featured">
+              <div class="pricing-tier">Pro</div>
+              <div class="pricing-price">₹4,900<span>/mo</span></div>
+              <p class="pricing-desc">Built for startups needing consistent data access.</p>
+              <ul class="pricing-features">
+                <li>50,000 requests / day</li>
+                <li>Priority Support</li>
+                <li>Custom Endpoints</li>
+                <li>99.9% Uptime SLA</li>
+              </ul>
+              <button class="pricing-btn pricing-btn-primary" onclick="startPaymentFlow('Pro')">Upgrade Now</button>
+            </div>
+  
+            <div class="pricing-card">
+              <div class="pricing-tier">Unlimited</div>
+              <div class="pricing-price">₹29,900<span>/mo</span></div>
+              <p class="pricing-desc">For large scale operations and data platforms.</p>
+              <ul class="pricing-features">
+                <li>Unlimited requests</li>
+                <li>Dedicated Account Manager</li>
+                <li>Direct DB Access</li>
+                <li>24/7 Phone Support</li>
+              </ul>
+              <button class="pricing-btn pricing-btn-ghost" onclick="startPaymentFlow('Unlimited')">Upgrade Unlimited</button>
+            </div>
+          </div>
+
+          <!-- Key Upgrade Box -->
+          <div id="paymentModeSection" style="margin-top: 60px; max-width: 500px; margin-left: auto; margin-right: auto; background: var(--bg-card); padding: 40px; border-radius: 20px; border: 1px solid var(--border-active);">
+            <div class="section-tag">Pricing</div>
+            <h1 style="color:white; margin-bottom:10px;">Upgrade Plan via Key</h1>
+            <p style="color:var(--text-muted); margin-bottom:30px;">Use the dashboard to upgrade an API Key.</p>
+            
+            <div class="form-group" style="text-align: left;">
+                <label class="form-label">Your API Key</label>
+                <input type="text" id="upgradeApiKey" class="form-input" placeholder="Paste your API key here">
+            </div>
+            <div class="form-group" style="text-align: left;">
+                <label class="form-label">Select Plan</label>
+                <select class="form-select" id="upgradeSelectedPlan">
+                <option value="Pro">Pro (₹4,900/mo)</option>
+                <option value="Unlimited">Unlimited (₹29,900/mo)</option>
+                </select>
+            </div>
+            <button class="pricing-btn pricing-btn-primary" onclick="upgradeDashboardPlan()">Confirm Upgrade</button>
+          </div>
+        </div>
+    </main>
+
+    <!-- Dashboard Section -->
+    <main id="section-dashboard" class="section">
+        <div class="dashboard-page">
+            <div class="dash-header">
+                <div>
+                    <h1 class="dash-title">API Console</h1>
+                    <p class="dash-subtitle">Monitor your application's health and usage.</p>
+                </div>
+                <div id="keyCount" style="background:rgba(255,255,255,0.05); padding:6px 16px; border-radius:100px; font-size:13px; font-weight:600;">3 active keys</div>
+            </div>
+
+            <div class="dash-stats">
+                <div class="dash-stat-card">
+                    <div class="dash-stat-label">SYSTEM USERS</div>
+                    <div class="dash-stat-value" id="dash-users">...</div>
+                    <div class="dash-stat-change up">Global Registered</div>
+                </div>
+                <div class="dash-stat-card">
+                    <div class="dash-stat-label">ACTIVE API KEYS</div>
+                    <div class="dash-stat-value" id="dash-keys">...</div>
+                    <div class="dash-stat-change up">In Production</div>
+                </div>
+                <div class="dash-stat-card">
+                    <div class="dash-stat-label">EST. REVENUE</div>
+                    <div class="dash-stat-value" id="dash-revenue">...</div>
+                    <div class="dash-stat-change up">Monthly Projection</div>
+                </div>
+                <div class="dash-stat-card">
+                    <div class="dash-stat-label">YOUR QUOTA</div>
+                    <div class="dash-stat-value" id="dash-quota">...</div>
+                    <div class="dash-stat-change green">Healthy</div>
+                </div>
+            </div>
+
+            <div class="dash-grid">
+                <div class="dash-card">
+                    <div class="dash-card-title">Usage Overview <span style="font-weight:400;color:var(--text-muted);font-size:12px;">Last 7 days</span></div>
+                    <div class="chart-container"><canvas id="usageChart"></canvas></div>
+                </div>
+                <div class="dash-card">
+                    <div class="dash-card-title">Endpoint Distribution <span style="font-weight:400;color:var(--text-muted);font-size:12px;">Active Traffic</span></div>
+                    <div class="chart-container"><canvas id="endpointChart"></canvas></div>
+                </div>
+            </div>
+
+            <div class="dash-card">
+                <div class="dash-card-title">Active API Keys <button class="nav-cta" onclick="openModal()" style="font-size:11px; padding:4px 12px;">+ New Key</button></div>
+                <div class="keys-table-wrap">
+                    <table class="keys-table">
+                        <thead>
+                            <tr>
+                                <th>API Key Reference</th>
+                                <th>App Name</th>
+                                <th>Plan</th>
+                                <th>Status</th>
+                                <th>Daily Quota</th>
+                                <th>Created</th>
+                            </tr>
+                        </thead>
+                        <tbody id="keysTableBody">
+                            <!-- Injected via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Docs Section -->
+    <main id="section-docs" class="section">
+        <div class="docs-page" style="max-width: 900px; margin: 0 auto; padding: 40px 20px;">
+            <div class="section-tag">Documentation</div>
+            <h1 style="color:white; margin-bottom:10px;">Developer Reference</h1>
+            <p style="color:var(--text-muted); margin-bottom:40px;">Integrate India's village data into your apps in minutes.</p>
+
+            <div class="docs-block" style="background:var(--bg-card); border:1px solid var(--border); border-radius:16px; padding:30px; margin-bottom:30px;">
+                <h3 style="color:white; margin-bottom:15px;">1. Authentication</h3>
+                <p style="color:var(--text-secondary); margin-bottom:20px;">All API requests must include your API Key in the <code style="color:var(--accent-bright)">x-api-key</code> header.</p>
+                <div style="background:rgba(0,0,0,0.3); padding:15px; border-radius:8px; font-family:monospace; color:var(--text-primary); border:1px solid rgba(255,255,255,0.05);">
+                    curl -H "x-api-key: YOUR_API_KEY" https://api.geopin.in/api/search?q=Amod
+                </div>
+            </div>
+
+            <div class="docs-block" style="background:var(--bg-card); border:1px solid var(--border); border-radius:16px; padding:30px;">
+                <h3 style="color:white; margin-bottom:15px;">2. Search Village</h3>
+                <p style="color:var(--text-secondary); margin-bottom:15px;"><span class="endpoint-method method-get" style="display:inline-block; margin-right:10px;">GET</span> <code style="color:white">/api/search</code></p>
+                <p style="color:var(--text-muted); margin-bottom:20px;">Search through 600,000+ villages by name, district, or sub-district.</p>
+                
+                <h4 style="color:white; font-size:14px; margin-bottom:10px;">PARAMETERS</h4>
+                <table style="width:100%; border-collapse: collapse; margin-bottom:30px;">
+                    <tr style="border-bottom:1px solid var(--border);">
+                        <td style="padding:12px 0; color:var(--accent-bright); font-family:monospace;">q</td>
+                        <td style="padding:12px 0; color:var(--text-secondary);">The search query (string)</td>
+                        <td style="padding:12px 0; color:var(--text-muted); text-align:right;">Required</td>
+                    </tr>
+                    <tr style="border-bottom:1px solid var(--border);">
+                        <td style="padding:12px 0; color:var(--accent-bright); font-family:monospace;">limit</td>
+                        <td style="padding:12px 0; color:var(--text-secondary);">Number of results (1-50)</td>
+                        <td style="padding:12px 0; color:var(--text-muted); text-align:right;">Optional (Default: 10)</td>
+                    </tr>
+                </table>
+
+                <h4 style="color:white; font-size:14px; margin-bottom:10px;">RESPONSE EXAMPLE</h4>
+                <pre style="background:rgba(0,0,0,0.3); padding:20px; border-radius:8px; font-family:monospace; color:var(--text-secondary); font-size:13px; border:1px solid rgba(255,255,255,0.05); overflow-x:auto;">
+{
+  "success": true,
+  "data": [
+    {
+      "village": "Amod",
+      "sub_district": "Amod",
+      "district": "Bharuch",
+      "state": "Gujarat",
+      "code": "522198"
+    }
+  ]
+}
+                </pre>
+            </div>
+        </div>
+    </main>
+
+  </div>
+
+  <!-- Generate Key Modal -->
+  <div class="modal-overlay" id="keyModal">
+    <div class="modal">
+      <h2>Generate API Key</h2>
+      <p>Create a unique key for your application.</p>
+      <div class="form-group">
+        <label class="form-label">App Name</label>
+        <input type="text" id="newKeyName" class="form-input" placeholder="e.g. My Website, Billing Bot">
+      </div>
+      <div class="modal-actions">
+        <button class="modal-cancel" onclick="closeModal()">Cancel</button>
+        <button class="modal-confirm" onclick="generateApiKey()">Generate Key</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Auth Modal -->
+  <div class="modal-overlay" id="authModal">
+    <div class="modal" style="max-width: 400px;">
+      <h2 id="authModalTitle">Sign In</h2>
+      <p id="authModalDesc">Welcome back to GeoPin.</p>
+      
+      <div class="form-group" style="margin-top: 15px; text-align: left;">
+        <label class="form-label" id="authNameLabel" style="display:none;">Name</label>
+        <input type="text" id="authName" class="form-input" style="display:none;" placeholder="John Doe">
+      </div>
+      <div class="form-group" style="margin-top: 15px; text-align: left;">
+        <label class="form-label">Email</label>
+        <input type="email" id="authEmail" class="form-input" placeholder="john@example.com">
+      </div>
+      <div class="form-group" style="margin-top: 15px; text-align: left;">
+        <label class="form-label">Password</label>
+        <input type="password" id="authPassword" class="form-input" placeholder="••••••••">
+      </div>
+
+      <div class="modal-actions" style="margin-top: 24px;">
+        <button class="modal-cancel" onclick="closeAuthModal()">Cancel</button>
+        <button class="pricing-btn pricing-btn-primary" id="authSubmitBtn" onclick="submitAuth()" style="width: auto; margin-left: auto; padding: 10px 20px;">Login</button>
+      </div>
+      <div style="margin-top:20px; font-size:13px; color:var(--text-muted); cursor:pointer;" onclick="toggleAuthMode()" id="authToggleText">
+        Don't have an account? Sign up
+      </div>
+    </div>
+  </div>
+
+  <!-- Biodata Modal -->
+  <div class="modal-overlay" id="biodataModal">
+    <div class="modal" style="max-width: 500px;">
+      <h2 style="color:white;margin-bottom:20px; font-size:24px; text-align: left;">Village Details</h2>
+      <div style="text-align: left; background: rgba(255,255,255,0.03); padding: 20px; border-radius: 12px; border: 1px solid var(--border); font-size: 15px; line-height: 2; color: var(--text-secondary);">
+        <p><strong style="color: white; width: 120px; display: inline-block;">Village:</strong> <span id="bioVillage" style="color:var(--accent-bright); font-weight:bold; font-size: 18px;"></span></p>
+        <p><strong style="color: white; width: 120px; display: inline-block;">Sub-District:</strong> <span id="bioSubDistrict"></span></p>
+        <p><strong style="color: white; width: 120px; display: inline-block;">District:</strong> <span id="bioDistrict"></span></p>
+        <p><strong style="color: white; width: 120px; display: inline-block;">State:</strong> <span id="bioState"></span></p>
+        <p><strong style="color: white; width: 120px; display: inline-block;">Country:</strong> <span id="bioCountry">India</span></p>
+      </div>
+      <div class="modal-actions" style="margin-top: 24px;">
+        <button class="pricing-btn pricing-btn-primary" onclick="closeBiodataModal()" style="padding: 10px 20px; width: 100%;">Close Details</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">
+    <span class="toast-icon">✓</span>
+    <span id="toastMsg">Copied to clipboard</span>
+  </div>
+
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+node_modules/
+.env
+server.log
+index.html.bak
+scratch/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+dist/
+build/
