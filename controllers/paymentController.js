@@ -2,11 +2,13 @@ const Razorpay = require('razorpay');
 const crypto = require('crypto');
 const pool = require('../config/db');
 
-// You should ideally put these in .env in a real environment
-const razorpay = new Razorpay({
-    key_id: process.env.RAZORPAY_KEY_ID,
-    key_secret: process.env.RAZORPAY_KEY_SECRET
-});
+// Lazy initialization — only create when needed (prevents crash if env missing)
+function getRazorpay() {
+    return new Razorpay({
+        key_id: process.env.RAZORPAY_KEY_ID,
+        key_secret: process.env.RAZORPAY_KEY_SECRET
+    });
+}
 
 exports.createOrder = async (req, res) => {
     try {
@@ -27,7 +29,7 @@ exports.createOrder = async (req, res) => {
             notes: { apiKey, plan } // 📝 Store these for webhook reference
         };
 
-        const order = await razorpay.orders.create(options);
+        const order = await getRazorpay().orders.create(options);
         res.json({ success: true, order });
     } catch (err) {
         console.error("Error creating order:", err);
