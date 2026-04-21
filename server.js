@@ -91,6 +91,12 @@ app.use(errorHandler);
 ================================ */
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-  console.log(`✅ Server running on port ${PORT}`);
-});
+// Local development: start the server normally
+// Vercel: export the app for serverless function invocation
+if (process.env.VERCEL !== '1') {
+  app.listen(PORT, () => {
+    console.log(`✅ Server running on port ${PORT}`);
+  });
+}
+
+module.exports = app;
