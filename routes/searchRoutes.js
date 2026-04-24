@@ -6,4 +6,7 @@ const apiKeyMiddleware = require("../middlewares/apiKeyMiddleware");
 // Protected search endpoint
 router.get("/search", apiKeyMiddleware, searchController.searchLocations);
 
+// Public search for landing page demo
+router.get("/public-search", searchController.searchLocations);
+
 module.exports = router;

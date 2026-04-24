@@ -65,12 +65,21 @@ async function performSearch(query) {
     }
 
     try {
-        const res = await fetch(`${BASE_URL}/api/search?q=${query}`, {
-            headers: { "x-api-key": API_KEY }
+        const endpoint = API_KEY ? `/api/search?q=${query}` : `/api/public-search?q=${query}`;
+        const headers = API_KEY ? { "x-api-key": API_KEY } : {};
+        
+        const res = await fetch(`${BASE_URL}${endpoint}`, {
+            headers: headers
         });
 
         if (!res.ok) {
-            console.error("Search failed:", await res.text());
+            const errData = await res.json().catch(() => ({}));
+            const errMsg = errData.error || "Search failed";
+            console.error("Search failed:", errMsg);
+            searchResults.innerHTML = `<div class="search-hint" style="color:var(--danger)">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="margin-right:8px;vertical-align:middle"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M12 8v4M12 16h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                ${errMsg}
+            </div>`;
             return;
         }
 
@@ -579,8 +588,8 @@ async function submitAuth() {
                 localStorage.setItem("geo_user_email", USER_EMAIL);
                 closeAuthModal();
                 updateNavUI();
-                loadDashboardData();
                 showToast("Logged in successfully");
+                showSection('dashboard');
             }
         } else {
             alert(data.error);
