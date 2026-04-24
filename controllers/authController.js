@@ -68,6 +68,44 @@ exports.loginUser = async (req, res) => {
   }
 };
 
+exports.socialLogin = async (req, res) => {
+  const { email, name, provider } = req.body;
+
+  if (!email) return res.status(400).json({ success: false, error: "Email is required for social login" });
+
+  try {
+    // 1. Check if user already exists
+    let user;
+    const result = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
+    
+    if (result.rows.length === 0) {
+      // Auto-register the user if they don't exist
+      const dummyPassword = await bcrypt.hash(crypto.randomBytes(8).toString("hex"), 10);
+      const userName = name || email.split("@")[0];
+      const newUser = await pool.query(
+        "INSERT INTO users (name, email, password_hash) VALUES ($1, $2, $3) RETURNING id, name, email",
+        [userName, email, dummyPassword]
+      );
+      user = newUser.rows[0];
+    } else {
+      user = result.rows[0];
+    }
+
+    // 2. Generate JWT
+    const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: "10d" });
+
+    res.json({
+      success: true,
+      token,
+      user: { id: user.id, name: user.name, email: user.email }
+    });
+
+  } catch (err) {
+    console.error("Social Login error:", err);
+    res.status(500).json({ success: false, error: "Error during social login" });
+  }
+};
+
 exports.generateKey = async (req, res) => {
   const { name } = req.body;
   

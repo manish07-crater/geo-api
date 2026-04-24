@@ -555,8 +555,86 @@ function toggleAuthMode() {
 }
 
 function socialLogin(provider) {
-    showToast(provider + " login integration coming soon!");
+    const popup = window.open("", `${provider} OAuth Verification`, "width=450,height=550,left=200,top=100");
+    if (!popup) return alert("Popup blocked! Please allow popups for this site.");
+    
+    popup.document.write(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Sign in with ${provider}</title>
+        <style>
+            body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; padding: 40px 20px; background: #fff; color: #333; margin: 0; }
+            h2 { font-weight: 500; margin-bottom: 5px; }
+            p { color: #5F6368; margin-bottom: 40px; font-size: 15px; }
+            input { padding: 13px 15px; width: 100%; max-width: 320px; border-radius: 4px; border: 1px solid #DADCE0; font-size: 16px; margin-bottom: 30px; box-sizing: border-box; }
+            input:focus { outline: none; border-color: #1a73e8; }
+            button { padding: 10px 24px; background: #1a73e8; color: white; border: none; border-radius: 4px; font-size: 14px; font-weight: 500; cursor: pointer; display: inline-block; }
+            button:hover { background: #1557b0; }
+            .logo { font-size: 24px; font-weight: 600; color: #5B8DEF; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+        </style>
+    </head>
+    <body>
+        <div class="logo">GeoPin</div>
+        <h2>Sign in with ${provider}</h2>
+        <p>Choose an account to continue to GeoPin</p>
+        <div>
+            <input type="email" id="email" placeholder="Email or phone" autofocus>
+            <br>
+            <div style="max-width: 320px; margin: 0 auto; text-align: right;">
+                <button onclick="submitEmail()">Next</button>
+            </div>
+        </div>
+        <script>
+            function submitEmail() {
+                const em = document.getElementById('email').value;
+                if(em) {
+                    window.opener.postMessage({ type: 'MOCK_OAUTH', email: em, provider: '${provider}' }, '*');
+                    window.close();
+                } else {
+                    alert('Please enter an email address');
+                }
+            }
+            // Send on enter key
+            document.getElementById('email').addEventListener('keypress', function(e) {
+                if(e.key === 'Enter') submitEmail();
+            });
+        </script>
+    </body>
+    </html>
+    `);
 }
+
+// Listen for messages from the OAuth popup
+window.addEventListener('message', async (event) => {
+    if (event.data && event.data.type === 'MOCK_OAUTH') {
+        const { email, provider } = event.data;
+        
+        try {
+            const res = await fetch(BASE_URL + '/api/auth/social-login', {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email: email.trim(), provider })
+            });
+            const data = await res.json();
+            
+            if(data.success) {
+                JWT_TOKEN = data.token;
+                USER_EMAIL = data.user.email;
+                localStorage.setItem("geo_user_token", JWT_TOKEN);
+                localStorage.setItem("geo_user_email", USER_EMAIL);
+                closeAuthModal();
+                updateNavUI();
+                showToast(`${provider} Login successful!`);
+                showSection('dashboard');
+            } else {
+                alert(data.error);
+            }
+        } catch(e) {
+            alert("Error connecting to auth servers");
+        }
+    }
+});
 
 function closeAuthModal() {
     document.getElementById("authModal").classList.remove("active");

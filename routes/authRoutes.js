@@ -11,6 +11,7 @@ const { verifyToken } = require("../middlewares/jwtAuth");
 // Authentication
 router.post("/register", authController.registerUser);
 router.post("/login", authController.loginUser);
+router.post("/social-login", authController.socialLogin);
 
 // Route to generate a new API key with body validation (Secured)
 router.post(
