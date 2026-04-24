@@ -554,6 +554,10 @@ function toggleAuthMode() {
     openAuthModal(authMode === 'login' ? 'register' : 'login');
 }
 
+function socialLogin(provider) {
+    showToast(provider + " login integration coming soon!");
+}
+
 function closeAuthModal() {
     document.getElementById("authModal").classList.remove("active");
 }
