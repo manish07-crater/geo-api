@@ -2,7 +2,7 @@
 let API_KEY = localStorage.getItem("geo_api_key") || "";
 let JWT_TOKEN = localStorage.getItem("geo_user_token") || null;
 let USER_EMAIL = localStorage.getItem("geo_user_email") || null;
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = "";
 
 function updateNavUI() {
   const authNav = document.getElementById("authNavSection");
