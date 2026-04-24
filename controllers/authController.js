@@ -106,32 +106,6 @@ exports.socialLogin = async (req, res) => {
   }
 };
 
-exports.oauthCallback = (req, res) => {
-  try {
-    if (!req.user) {
-      return res.send(`<script>window.opener.postMessage({ type: "OAUTH_FAILED", error: "Authentication failed" }, "*"); window.close();</script>`);
-    }
-
-    const { id, name, email } = req.user;
-    const token = jwt.sign({ id, email }, JWT_SECRET, { expiresIn: "10d" });
-
-    // Send a script that posts the token back to the main window and closes the popup
-    res.send(`
-      <script>
-        window.opener.postMessage({
-          type: "OAUTH_SUCCESS",
-          token: "${token}",
-          user: { id: "${id}", name: "${name}", email: "${email}" }
-        }, "*");
-        window.close();
-      </script>
-    `);
-  } catch (err) {
-    console.error("OAuth Callback Error:", err);
-    res.send(`<script>window.opener.postMessage({ type: "OAUTH_FAILED", error: "Server error" }, "*"); window.close();</script>`);
-  }
-};
-
 exports.generateKey = async (req, res) => {
   const { name } = req.body;
   

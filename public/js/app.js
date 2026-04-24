@@ -555,32 +555,32 @@ function toggleAuthMode() {
 }
 
 function socialLogin(provider) {
-    const url = BASE_URL + '/api/auth/' + provider.toLowerCase();
-    const popup = window.open(url, `${provider} OAuth Verification`, "width=450,height=550,left=200,top=100");
-    if (!popup) return alert("Popup blocked! Please allow popups for this site.");
-}
-
-// Listen for messages from the OAuth popup
-window.addEventListener('message', async (event) => {
-    if (event.data && event.data.type === 'OAUTH_SUCCESS') {
-        const { token, user } = event.data;
-        
-        if (token && user) {
-            JWT_TOKEN = token;
-            USER_EMAIL = user.email;
-            localStorage.setItem("geo_user_token", JWT_TOKEN);
-            localStorage.setItem("geo_user_email", USER_EMAIL);
-            closeAuthModal();
-            updateNavUI();
-            showToast(`Login successful!`);
-            showSection('dashboard');
-        } else {
-            alert("Authentication failed to retrieve user data.");
-        }
-    } else if (event.data && event.data.type === 'OAUTH_FAILED') {
-        alert("Login Failed: " + (event.data.error || "Authentication error"));
+    const email = prompt(`GeoPin ${provider} Login Simulation:\n\nEnter the email address you want to login with:`);
+    
+    if (email && email.trim()) {
+        fetch(BASE_URL + '/api/auth/social-login', {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: email.trim(), provider: provider })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.success) {
+                JWT_TOKEN = data.token;
+                USER_EMAIL = data.user.email;
+                localStorage.setItem("geo_user_token", JWT_TOKEN);
+                localStorage.setItem("geo_user_email", USER_EMAIL);
+                closeAuthModal();
+                updateNavUI();
+                showToast(`${provider} Login successful!`);
+                showSection('dashboard');
+            } else {
+                alert(data.error);
+            }
+        })
+        .catch(e => alert("Error connecting to auth servers"));
     }
-});
+}
 
 function closeAuthModal() {
     document.getElementById("authModal").classList.remove("active");
