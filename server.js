@@ -31,6 +31,12 @@ app.use(cors({
 
 app.use(express.json());
 
+// Initialize Passport
+const passport = require("passport");
+require("./config/passport");
+app.use(passport.initialize());
+
+
 // 🗃️ Logger configuration (shows API requests in terminal)
 app.use(morgan("dev"));
 
